@@ -18,4 +18,7 @@ public class TipoService {
 	public List<Tipo> listar(){
 		return tipoRepository.findAll();
 	}	
+	
+	
+	
 }
