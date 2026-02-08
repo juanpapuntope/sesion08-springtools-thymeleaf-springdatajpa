@@ -76,7 +76,13 @@ public class LoginController {
     
     @GetMapping("/menu")
     public String mostrarMenu(Model model) {
-        // Aquí podrías validar que hay una sesión activa
         return "menu";
+    }
+    
+
+    @GetMapping("/listar")
+    public String listarUsuarios(Model model) {
+        model.addAttribute("listaUsuarios", usuarioService.listarTodos());
+        return "listar"; 
     }
 }
