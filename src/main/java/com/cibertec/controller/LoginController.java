@@ -46,7 +46,7 @@ public class LoginController {
     @GetMapping("/listar")
     public String listarUsuarios(Model model) {
         model.addAttribute("usuarios", usuarioService.listarTodos());
-        return "listado";
+        return "listar";
     }
     
     @GetMapping("/registrar")

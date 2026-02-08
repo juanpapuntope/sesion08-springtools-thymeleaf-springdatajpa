@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listar</title>
+</head>
+<body>
+	<h2>Lista de Usuarios</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Usuario</th>
+            <th>Fecha Nac.</th>
+            <th>Tipo</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr th:each="u : ${usuarios}">
+            <td th:text="${u.codUsua}"></td>
+            <td th:text="${u.nomUsua}"></td>
+            <td th:text="${u.apeUsua}"></td>
+            <td th:text="${u.usrUsua}"></td>
+            <td th:text="${u.fnaUsua}"></td>
+            <td th:text="${u.tipo != null ? u.tipo.descripcion : 'Sin tipo'}"></td>
+    		<td th:text="${u.estUsua == 1 ? 'Activo' : 'Inactivo'}"></td>
+        </tr>
+    </tbody>
+</table>
+
+    
+</body>
+</html>
