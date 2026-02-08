@@ -30,6 +30,10 @@
             <td th:text="${u.tipo != null ? u.tipo.descripcion : 'Sin tipo'}"></td>
     		<td th:text="${u.estUsua == 1 ? 'Activo' : 'Inactivo'}"></td>
         </tr>
+        <a th:href="@{/editar/{id}(id=${u.codUsua})}" 
+           style="padding:6px 10px; background:#3498db; color:white; text-decoration:none; border-radius:5px;">
+           Editar
+        </a>
     </tbody>
 </table>
 
