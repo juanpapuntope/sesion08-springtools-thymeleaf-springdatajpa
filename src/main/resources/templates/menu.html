@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Principal</title>
+</head>
+<body>
+
+<h2>Menú del Sistema</h2>
+
+
+<ul>
+
+    <li>
+        <a th:href="@{/registrar}">Registrar Usuario</a>
+    </li>
+
+    <li>
+        <a th:href="@{/listar}">Listar Usuarios</a>
+    </li>
+
+</ul>
+
+
+
+</body>
+</html>
