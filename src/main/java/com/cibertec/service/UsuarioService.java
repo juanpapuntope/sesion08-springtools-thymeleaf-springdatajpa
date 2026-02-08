@@ -1,5 +1,7 @@
 package com.cibertec.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import com.cibertec.model.Usuario;
 import com.cibertec.repository.UsuarioRepository;
@@ -29,4 +31,8 @@ public class UsuarioService {
 	public void guardar(Usuario usuario) {
 		usuarioRepository.save(usuario);
 	}
+	
+	 public List<Usuario> listadoUsuarios() {
+	        return usuarioRepository.findAll();
+	    }	
 }
