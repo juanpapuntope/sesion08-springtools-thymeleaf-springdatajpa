@@ -37,4 +37,10 @@ public class UsuarioService {
 	    return usuarioRepository.findAll();
 	}
 	
+	// Método para buscar un usuario por su ID (necesario para cargar los datos en el formulario)
+	public Usuario buscarPorId(int id) {
+	    return usuarioRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+	}
+	
 }
