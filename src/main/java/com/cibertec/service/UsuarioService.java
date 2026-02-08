@@ -32,7 +32,7 @@ public class UsuarioService {
 		usuarioRepository.save(usuario);
 	}
 	
-	 public List<Usuario> listadoUsuarios() {
+	public List<Usuario> listadoUsuarios() {
 		 return usuarioRepository.findAll();
-	 }	
+	}	
 }
