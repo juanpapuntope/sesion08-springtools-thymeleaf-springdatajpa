@@ -79,4 +79,14 @@ public class LoginController {
         // Aquí podrías validar que hay una sesión activa
         return "menu";
     }
+    
+    
+    @GetMapping("/listar")
+    public String listarUsuarios(Model model) {
+        // 1. Obtenemos la lista desde el servicio
+        model.addAttribute("listaUsuarios", usuarioService.listarTodos()); 
+        // 2. Retornamos el nombre del archivo HTML (listar.html)
+        return "listar"; 
+    }
+    
 }
