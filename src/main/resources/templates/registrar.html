@@ -1,61 +1,68 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Usuario</title>
+    <title>CiberFarma - Registro</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body { background-color: #C5BFAE; color: #1C1C1C; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .reg-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 400px; opacity: 0; transform: translateY(30px); }
+        h2 { text-align: center; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 10px; border: 2px solid #C5BFAE; border-radius: 8px; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus, select:focus { border-color: #1C1C1C; }
+        button { width: 100%; padding: 12px; background: #1C1C1C; color: #C5BFAE; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.3s; }
+        button:hover { opacity: 0.9; transform: scale(1.02); }
+        .alert { padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center; font-size: 0.9rem; }
+        .alert-ok { background: #d4edda; color: #155724; }
+        .alert-error { background: #f8d7da; color: #721c24; }
+        .btn-link { display: block; text-align: center; margin-top: 15px; color: #1C1C1C; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+    </style>
 </head>
 <body>
-    <h2>Registrar Nuevo Usuario</h2>
-    
-    <!-- Mensaje de éxito -->
-<div th:if="${mensajeOk}" style="color: green; font-weight: bold;">
-    <p th:text="${mensajeOk}"></p>
-</div>
+    <div class="reg-card" id="regCard">
+        <h2>Nuevo Registro</h2>
 
-<!-- Mensaje de error -->
-<div th:if="${mensajeError}" style="color: red; font-weight: bold;">
-    <p th:text="${mensajeError}"></p>
-</div>
-    
-    <form th:action="@{/guardar}" th:object="${usuario}" method="post">
+        <div th:if="${mensajeOk}" class="alert alert-ok" th:text="${mensajeOk}"></div>
+        <div th:if="${mensajeError}" class="alert alert-error" th:text="${mensajeError}"></div>
+
+        <form th:action="@{/guardar}" th:object="${usuario}" method="post">
+            <div class="form-group">
+                <label>Nombre:</label>
+                <input type="text" th:field="*{nomUsua}" required>
+            </div>
+            <div class="form-group">
+                <label>Apellido:</label>
+                <input type="text" th:field="*{apeUsua}" required>
+            </div>
+            <div class="form-group">
+                <label>Usuario (Email):</label>
+                <input type="email" th:field="*{usrUsua}" required>
+            </div>
+            <div class="form-group">
+                <label>Contraseña:</label>
+                <input type="password" th:field="*{claUsua}" required>
+            </div>
+            <div class="form-group">
+                <label>Fecha de Nacimiento:</label>
+                <input type="date" th:field="*{fnaUsua}" required>
+            </div>
+            <div class="form-group">
+                <label>Tipo de Usuario:</label>
+                <select th:field="*{tipo.idTipo}">
+                    <option th:each="t : ${tipos}" th:value="${t.idTipo}" th:text="${t.descripcion}"></option>
+                </select>
+            </div>
+            <button type="submit">REGISTRAR USUARIO</button>
+        </form>
         
-        <label>Nombres:</label>
-        <input type="text" th:field="*{nomUsua}" required/><br/>
-        
-        <label>Apellidos:</label>
-        <input type="text" th:field="*{apeUsua}" required/><br/>
-        
-        <label>Usuario:</label>
-        <input type="text" th:field="*{usrUsua}" required/><br/>
-        
-        <label>Contraseña:</label>
-        <input type="password" th:field="*{claUsua}" required/><br/>
-        
-        <label>Fecha de Nacimiento:</label>
-        <input type="date" th:field="*{fnaUsua}" required/><br/>
-        
-        <label>Tipo de Usuario:</label>
-        <select th:field="*{tipo.idTipo}" required>
-            <option value="">Seleccione...</option>
-            <!-- ↓↓↓ AQUÍ ESTÁ EL CAMBIO: idTipo con T mayúscula ↓↓↓ -->
-            <option th:each="t : ${tipos}" 
-                    th:value="${t.idTipo}" 
-                    th:text="${t.descripcion}">
-            </option>
-        </select><br/><br/>
-		
-		<label>Estado:</label>
-		<select th:field="*{estUsua}" required>
-		    <option value="1">Activo</option>
-		    <option value="0">Inactivo</option>
-		</select><br/>
-        
-        <button type="submit">Registrar</button>
-        
-    </form>
-    <a th:href="@{/menu}">Volver</a>
-    
-    
-    
+        <a th:href="@{/menu}" class="btn-link">VOLVER AL MENÚ</a>
+    </div>
+
+    <script>
+        // Animación de entrada suave
+        gsap.to("#regCard", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" });
+    </script>
 </body>
 </html>
