@@ -3,26 +3,122 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Menú Principal</title>
+    <title>Menú Principal - Sistema Pro</title>
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+            background: radial-gradient(circle, #eef2f3 0%, #d5dde1 100%);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Contenedor tipo Tarjeta Premium */
+        .menu-container {
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 25px; /* Bordes muy redondeados como la imagen */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            color: #1a3a5f;
+            font-weight: 700;
+            margin-bottom: 35px;
+            font-size: 26px;
+            letter-spacing: -0.5px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+        }
+
+        /* Estilo base de los botones */
+        .menu-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 17px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            gap: 12px; /* Espacio entre icono y texto */
+        }
+
+        /* Botón Azul (Registrar/Listar) */
+        .btn-blue {
+            background: linear-gradient(135deg, #1d8cf8 0%, #1165c6 100%);
+            box-shadow: 0 4px 15px rgba(29, 140, 248, 0.3);
+        }
+
+        .btn-blue:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(29, 140, 248, 0.4);
+            filter: brightness(1.1);
+        }
+
+        /* Botón Rojo (Cerrar Sesión) */
+        .btn-red {
+            background: linear-gradient(135deg, #f5365c 0%, #d11a3e 100%);
+            box-shadow: 0 4px 15px rgba(245, 54, 92, 0.3);
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-red:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(245, 54, 92, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .icon {
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Menú del Sistema</h2>
+    <div class="menu-container">
+        <h2>Menú del Sistema</h2>
 
+        <ul>
+            <li>
+                <a th:href="@{/registrar}" class="menu-link btn-blue">
+                    <span class="icon">📝</span> Registrar Usuario
+                </a>
+            </li>
 
-<ul>
+            <li>
+                <a th:href="@{/listar}" class="menu-link btn-blue">
+                    <span class="icon">👥</span> Listar Usuarios
+                </a>
+            </li>
 
-    <li>
-        <a th:href="@{/registrar}">Registrar Usuario</a>
-    </li>
-
-    <li>
-        <a th:href="@{/listar}">Listar Usuarios</a>
-    </li>
-
-</ul>
-
-
+            <li sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="menu-link btn-red">
+                        <span class="icon">🚪</span> Cerrar Sesión
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
 
 </body>
 </html>

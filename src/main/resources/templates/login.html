@@ -4,6 +4,86 @@
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
+
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    /* Contenedor principal tipo tarjeta */
+    .login-container {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 350px;
+        text-align: center;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 25px;
+    }
+
+    /* Estilo para los inputs */
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box; /* Para que el padding no afecte el ancho */
+        font-size: 16px;
+    }
+
+    /* Efecto al hacer clic en el input */
+    input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    }
+
+    /* Botón de Iniciar Sesión */
+    button {
+        width: 100%;
+        background-color: #007bff;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 15px;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Mensaje de error */
+    .error-msg {
+        background-color: #ffeef0;
+        color: #d93025;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        border: 1px solid #f5c2c7;
+    }
+</style>
+
+
 <body>
 <!-- Mensaje de error -->
 <div th:if="${mensajeError}" style="color:red;"
