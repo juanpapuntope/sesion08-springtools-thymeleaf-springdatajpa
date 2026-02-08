@@ -2,9 +2,7 @@ package com.cibertec.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.cibertec.model.Usuario;
 import com.cibertec.service.TipoService;
@@ -22,61 +20,59 @@ public class LoginController {
     }
 	
 	@GetMapping("/")
-	public String inicio() {
-		return "login";
-	}
+	public String inicio() { return "login"; }
 	
 	@GetMapping("/login")
-    public String mostrarLogin() {
-        return "login";
-    }
+    public String mostrarLogin() { return "login"; }
 	
 	@PostMapping("/login")
-	public String login(@RequestParam String username,
-	                    @RequestParam String password,
-	                    Model model) {
+	public String login(@RequestParam String username, @RequestParam String password, Model model) {
 	    try {
 	        Usuario user = usuarioService.login(username, password);
 	        model.addAttribute("nombres", user.getNomUsua());
 	        model.addAttribute("apellidos", user.getApeUsua());
-	        
-	        if(user != null && user.getTipo().getIdTipo() == 1) {//1:administrativo
-	            return "menu";
-	        } else {
-	            return "bienvenido"; 
-	        }
-	        
-	        
+	        return (user.getTipo().getIdTipo() == 1) ? "menu" : "bienvenido";
 	    } catch (RuntimeException e) {
 	        model.addAttribute("mensajeError", e.getMessage());
 	        return "login";
 	    }
 	}
 	
-	// Mostrar formulario
+    @GetMapping("/menu")
+    public String mostrarMenu() { return "menu"; }
+
+    // --- MÉTODOS QUE AGREGUE---
+
+    @GetMapping("/listar")
+    public String listarUsuarios(Model model) {
+        model.addAttribute("usuarios", usuarioService.listarTodos());
+        return "listado";
+    }
+    
     @GetMapping("/registrar")
     public String nuevoUsuario(Model model){
         model.addAttribute("usuario", new Usuario());
         model.addAttribute("tipos", tipoService.listar());
         return "registrar";
     }
-
-    // Guardar
-    @PostMapping("/guardar")
-    public String guardarUsuario(Usuario usuario, Model model){      
-        
-        try {
-        	usuarioService.guardar(usuario);
-            model.addAttribute("mensajeOk", "Usuario registrado correctamente");
-        } catch (Exception e) {
-            model.addAttribute("mensajeError", "Error al registrar el usuario");
-        }
+    
+    @GetMapping("/editar/{id}")
+    public String editarUsuario(@PathVariable int id, Model model) {
+        model.addAttribute("Usuario", usuarioService.buscarPorId(id));
+        model.addAttribute("tipos", tipoService.listar());
         return "registrar";
     }
-    
-    @GetMapping("/menu")
-    public String mostrarMenu(Model model) {
-        // Aquí podrías validar que hay una sesión activa
-        return "menu";
+
+    @PostMapping("/guardar")
+    public String guardarUsuario(@ModelAttribute Usuario usuario, Model model){      
+        try {
+            usuarioService.guardar(usuario);
+            return "redirect:/listar";
+        } catch (Exception e) {
+            model.addAttribute("mensajeError", "Error: " + e.getMessage());
+            model.addAttribute("tipos", tipoService.listar());
+            return "registrar";
+        }
     }
+    
 }
