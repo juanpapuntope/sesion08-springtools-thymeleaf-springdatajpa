@@ -28,9 +28,17 @@ public class UsuarioController {
         this.tipoRepository = tipoRepository;
     }
 
-    // Mostrar formulario
+    // ✅ LISTAR -> GET /usuarios  (esto calza con tu usuarios.html)
+    @GetMapping
+    public String listar(Model model) {
+        model.addAttribute("listadoUsuarios", usuarioService.listadoUsuarios());
+        return "usuarios"; // templates/usuarios.html
+    }
+
+    // ✅ Mostrar formulario editar -> GET /usuarios/editar/{id}
     @GetMapping("/editar/{id}")
     public String mostrarEditar(@PathVariable("id") int id, Model model) {
+
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con código: " + id));
 
@@ -38,14 +46,37 @@ public class UsuarioController {
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("tipos", tipos);
-        return "usuarios/editar"; // templates/usuarios/editar.html
+
+        // Ajusta el nombre según dónde guardes tu html:
+        // si está en templates/editar-usuario.html -> return "editar-usuario";
+        // si está en templates/usuarios/editar-usuario.html -> return "usuarios/editar-usuario";
+        return "editar-usuario";
     }
 
-    // Procesar edición
+    // ✅ Procesar edición -> POST /usuarios/editar/{id}
     @PostMapping("/editar/{id}")
     public String editar(@PathVariable("id") int id,
-                         @ModelAttribute Usuario usuarioForm) {
-        usuarioService.editar(id, usuarioForm);
-        return "redirect:/usuarios/listado"; // cambia a tu ruta real
+                         @ModelAttribute Usuario usuarioForm,
+                         @RequestParam("tipoId") int tipoId,
+                         Model model) {
+
+        try {
+            Tipo tipo = tipoRepository.findById(tipoId)
+                    .orElseThrow(() -> new RuntimeException("Tipo no encontrado"));
+
+            usuarioForm.setTipo(tipo);
+
+            usuarioService.editar(id, usuarioForm);
+
+            // ✅ vuelve al listado real (GET /usuarios)
+            return "redirect:/usuarios";
+
+        } catch (Exception e) {
+            // Si hay error (user repetido, etc), vuelve al form con mensaje
+            model.addAttribute("usuario", usuarioRepository.findById(id).orElse(usuarioForm));
+            model.addAttribute("tipos", tipoRepository.findAll());
+            model.addAttribute("error", e.getMessage());
+            return "editar-usuario";
+        }
     }
 }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Editar Usuario</title>
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+	<div class="container my-5">
+
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h2>Editar Usuario</h2>
+
+			<a th:href="@{/usuarios}" class="btn btn-outline-secondary">
+				Volver al listado
+			</a>
+		</div>
+
+		<div class="card shadow">
+			<div class="card-body">
+
+				<!-- Mensaje de error (lo manda el controller cuando hay excepción) -->
+				<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+				<form th:action="@{/usuarios/editar/{id}(id=${usuario.codUsua})}" th:object="${usuario}" method="post"
+					class="row g-3">
+
+					<!-- ID oculto -->
+					<input type="hidden" th:field="*{codUsua}" />
+
+					<div class="col-md-6">
+						<label class="form-label">Nombre</label>
+						<input type="text" class="form-control" th:field="*{nomUsua}" required>
+					</div>
+
+					<div class="col-md-6">
+						<label class="form-label">Apellido</label>
+						<input type="text" class="form-control" th:field="*{apeUsua}" required>
+					</div>
+
+					<div class="col-md-6">
+						<label class="form-label">Usuario</label>
+						<input type="text" class="form-control" th:field="*{usrUsua}" required>
+						<div class="form-text">Debe ser único.</div>
+					</div>
+
+					<div class="col-md-6">
+						<label class="form-label">Contraseña</label>
+
+						<!-- Importante: NO usamos th:field aquí para no mostrar la clave actual -->
+						<input type="password" class="form-control" name="claUsua"
+							placeholder="Dejar vacío para no cambiar">
+
+						<div class="form-text">Si lo dejas vacío, no se cambia la contraseña.</div>
+					</div>
+
+					<div class="col-md-6">
+						<label class="form-label">Fecha de nacimiento</label>
+						<input type="date" class="form-control" th:field="*{fnaUsua}">
+					</div>
+
+					<div class="col-md-6">
+						<label class="form-label">Tipo</label>
+
+						<!-- ✅ Se envía tipoId como RequestParam -->
+						<select class="form-select" name="tipoId" required>
+							<option value="">-- Seleccione --</option>
+
+							<option th:each="t : ${tipos}" th:value="${t.idTipo}" th:text="${t.descripcion}"
+								th:selected="${usuario.tipo != null and usuario.tipo.idTipo == t.idTipo}">
+							</option>
+						</select>
+
+						<div class="form-text">El usuario no puede quedar sin tipo.</div>
+					</div>
+
+					<div class="col-md-6">
+						<label class="form-label">Estado</label>
+						<select class="form-select" th:field="*{estUsua}">
+							<option value="1">Activo</option>
+							<option value="0">Inactivo</option>
+						</select>
+					</div>
+
+					<div class="col-12 d-flex justify-content-end gap-2 mt-2">
+						<a th:href="@{/usuarios}" class="btn btn-outline-secondary">
+							Cancelar
+						</a>
+						<button type="submit" class="btn btn-primary">
+							Guardar cambios
+						</button>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>

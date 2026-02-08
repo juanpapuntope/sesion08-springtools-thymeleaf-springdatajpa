@@ -3,9 +3,11 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Listado de Usuarios</title>
+
 	<!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
 	<div class="container my-5">
 		<div class="d-flex justify-content-between align-items-center mb-4">
@@ -17,7 +19,7 @@
 
 		<div class="card shadow">
 			<div class="table-responsive">
-				<table class="table table-striped table-hover mb-0">
+				<table class="table table-striped table-hover mb-0 align-middle">
 					<thead class="table-dark">
 						<tr>
 							<th>ID</th>
@@ -29,31 +31,46 @@
 							<th class="text-center">Acciones</th>
 						</tr>
 					</thead>
+
 					<tbody>
+						<tr th:if="${#lists.isEmpty(listadoUsuarios)}">
+							<td colspan="7" class="text-center py-4">
+								No hay usuarios registrados.
+							</td>
+						</tr>
+
 						<tr th:each="usuario : ${listadoUsuarios}">
 							<td th:text="${usuario.codUsua}">ID</td>
 							<td th:text="${usuario.nomUsua}">Nombre</td>
 							<td th:text="${usuario.apeUsua}">Apellido</td>
 							<td th:text="${usuario.usrUsua}">Usuario</td>
+
+							<!-- Ajustado: si tu Tipo tiene 'descripcion' -->
 							<td th:text="${usuario.tipo != null ? usuario.tipo.descripcion : 'Sin tipo'}">Tipo</td>
+
 							<td>
-								<span th:text="${usuario.estUsua == 1 ? 'Activo' : 'Inactivo'}"
+								<span
+									th:text="${usuario.estUsua == 1 ? 'Activo' : 'Inactivo'}"
 									th:classappend="${usuario.estUsua == 1 ? 'badge bg-success' : 'badge bg-secondary'}">
 								</span>
 							</td>
+
 							<td class="text-center">
 								<a th:href="@{/usuarios/editar/{id}(id=${usuario.codUsua})}"
-									class="btn btn-sm btn-warning">
+								   class="btn btn-sm btn-warning">
 									Editar
 								</a>
+
+								<!-- Si aún NO tienes eliminar, puedes comentar este bloque -->
 								<a th:href="@{/usuarios/eliminar/{id}(id=${usuario.codUsua})}"
-									class="btn btn-sm btn-danger"
-									onclick="return confirm('¿Está seguro de eliminar este usuario?');">
+								   class="btn btn-sm btn-danger"
+								   onclick="return confirm('¿Está seguro de eliminar este usuario?');">
 									Eliminar
 								</a>
 							</td>
 						</tr>
 					</tbody>
+
 				</table>
 			</div>
 		</div>
