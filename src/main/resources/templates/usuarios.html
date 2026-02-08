@@ -12,6 +12,10 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
+                <th>Usuario</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -19,8 +23,21 @@
                 <td th:text="${usuario.codUsua}">ID</td>
                 <td th:text="${usuario.nomUsua}">Nombre</td>
                 <td th:text="${usuario.apeUsua}">Apellido</td>
+                <td th:text="${usuario.usrUsua}">Usuario</td>
+               <td th:text="${usuario.tipo != null ? usuario.tipo.descripcion : 'Sin tipo'}">Tipo</td>
+                <td th:text="${usuario.estUsua == 1 ? 'Activo' : 'Inactivo'}">Estado</td>
+                <td>
+                    <!-- Botón Editar -->
+                    <a th:href="@{/usuarios/editar/{id}(id=${usuario.codUsua})}">Editar</a>
+                    &nbsp;|&nbsp;
+                    <!-- Botón Eliminar -->
+                    <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.codUsua})}">Eliminar</a>
+                </td>
             </tr>
         </tbody>
     </table>
+
+    <br/>
+    <a th:href="@{/menu}">Volver al menú</a>
 </body>
 </html>
