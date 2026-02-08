@@ -1,28 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Menú Principal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body { background-color: #C5BFAE; color: #1C1C1C; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .container { text-align: center; }
+        h1 { font-weight: 900; font-size: 3rem; margin-bottom: 40px; opacity: 0; }
+        .menu-grid { display: flex; gap: 20px; }
+        .card { background: #1C1C1C; color: #C5BFAE; padding: 30px; border-radius: 12px; text-decoration: none; width: 200px; transition: 0.4s; opacity: 0; transform: translateY(30px); }
+        .card:hover { background: #ffffff; color: #1C1C1C; transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .card h3 { margin: 0; font-size: 1.1rem; }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1 id="mainTitle">BIENVENIDO</h1>
+        <div class="menu-grid">
+            <a th:href="@{/registrar}" class="card">
+                <h3>Nuevo Usuario</h3>
+            </a>
+            <a th:href="@{/listar}" class="card">
+                <h3>Ver Listado</h3>
+            </a>
+            <a th:href="@{/login}" class="card" style="background: #ffffff; color: #1C1C1C; border: 2px solid #1C1C1C;">
+                <h3>Salir</h3>
+            </a>
+        </div>
+    </div>
 
-<h2>Menú del Sistema</h2>
-
-
-<ul>
-
-    <li>
-        <a th:href="@{/registrar}">Registrar Usuario</a>
-    </li>
-
-    <li>
-        <a th:href="@{/listar}">Listar Usuarios</a>
-    </li>
-
-</ul>
-
-
-
+    <script>
+        gsap.to("#mainTitle", { opacity: 1, y: 0, duration: 1, startAt: { y: -20 } });
+        gsap.to(".card", { opacity: 1, y: 0, stagger: 0.2, duration: 0.8, ease: "power3.out", delay: 0.3 });
+    </script>
 </body>
 </html>
