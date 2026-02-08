@@ -3,35 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Usuarios</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body { background-color: #C5BFAE; color: #1C1C1C; font-family: 'Segoe UI', sans-serif; padding: 50px; margin: 0; }
+        h2 { font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px; }
+        .btn-back { display: inline-block; margin-bottom: 20px; color: #1C1C1C; text-decoration: none; font-weight: bold; border-bottom: 2px solid #1C1C1C; padding-bottom: 2px; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        th { background: #1C1C1C; color: #C5BFAE; padding: 15px; text-align: left; text-transform: uppercase; font-size: 0.8rem; }
+        td { padding: 15px; border-bottom: 1px solid #eee; }
+        tr { opacity: 0; transform: translateY(10px); }
+        tr:hover { background: #fcfaff; }
+        .status-active { color: #2e7d32; font-weight: bold; }
+        .status-inactive { color: #d32f2f; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <h2>Usuarios Registrados</h2>
-    <a th:href="@{/menu}">Volver al Menú</a>
-    <br><br>
+    <a th:href="@{/menu}" class="btn-back">← VOLVER AL PANEL</a>
+    <h2>Usuarios del Sistema</h2>
 
-    <table border="1">
+    <table>
         <thead>
             <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th>ID</th>
+                <th>Nombre Completo</th>
                 <th>Usuario</th>
-                <th>Fecha Nac.</th>
-                <th>Tipo</th>
+                <th>Rol / Tipo</th>
                 <th>Estado</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="u : ${listaUsuarios}">
+            <tr th:each="u : ${listaUsuarios}" class="user-row">
                 <td th:text="${u.codUsua}"></td>
-                <td th:text="${u.nomUsua}"></td>
-                <td th:text="${u.apeUsua}"></td>
+                <td th:text="${u.nomUsua + ' ' + u.apeUsua}"></td>
                 <td th:text="${u.usrUsua}"></td>
-                <td th:text="${u.fnaUsua}"></td>
-                <td th:text="${u.tipo != null ? u.tipo.descripcion : 'Sin tipo'}"></td>
-                <td th:text="${u.estUsua == 1 ? 'Activo' : 'Inactivo'}"></td>
+                <td th:text="${u.tipo != null ? u.tipo.descripcion : 'General'}"></td>
+                <td>
+                    <span th:class="${u.estUsua == 1 ? 'status-active' : 'status-inactive'}"
+                          th:text="${u.estUsua == 1 ? 'ACTIVO' : 'INACTIVO'}"></span>
+                </td>
             </tr>
         </tbody>
     </table>
+
+    <script>
+        gsap.to(".user-row", { opacity: 1, y: 0, stagger: 0.08, duration: 0.6, ease: "power2.out" });
+    </script>
 </body>
 </html>
