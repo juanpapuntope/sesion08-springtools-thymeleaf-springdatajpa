@@ -9,7 +9,5 @@ import com.cibertec.model.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 	Optional<Usuario> findByUsrUsuaAndClaUsua(String username, String password);
-	
-	
-	
+	boolean existsByUsrUsuaAndCodUsuaNot(String usrUsua, int codUsua);
 }
