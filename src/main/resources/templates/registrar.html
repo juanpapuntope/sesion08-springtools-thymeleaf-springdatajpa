@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Usuario</title>
+</head>
+<body>
+    <h2>Registrar Nuevo Usuario</h2>
+    
+    <!-- Mensaje de éxito -->
+<div th:if="${mensajeOk}" style="color: green; font-weight: bold;">
+    <p th:text="${mensajeOk}"></p>
+</div>
+
+<!-- Mensaje de error -->
+<div th:if="${mensajeError}" style="color: red; font-weight: bold;">
+    <p th:text="${mensajeError}"></p>
+</div>
+    
+    <form th:action="@{/guardar}" th:object="${usuario}" method="post">
+        
+        <label>Nombres:</label>
+        <input type="text" th:field="*{nomUsua}" required/><br/>
+        
+        <label>Apellidos:</label>
+        <input type="text" th:field="*{apeUsua}" required/><br/>
+        
+        <label>Usuario:</label>
+        <input type="text" th:field="*{usrUsua}" required/><br/>
+        
+        <label>Contraseña:</label>
+        <input type="password" th:field="*{claUsua}" required/><br/>
+        
+        <label>Fecha de Nacimiento:</label>
+        <input type="date" th:field="*{fnaUsua}" required/><br/>
+        
+        <label>Tipo de Usuario:</label>
+        <select th:field="*{tipo.idTipo}" required>
+            <option value="">Seleccione...</option>
+            <!-- ↓↓↓ AQUÍ ESTÁ EL CAMBIO: idTipo con T mayúscula ↓↓↓ -->
+            <option th:each="t : ${tipos}" 
+                    th:value="${t.idTipo}" 
+                    th:text="${t.descripcion}">
+            </option>
+        </select><br/><br/>
+		
+		<label>Estado:</label>
+		<select th:field="*{estUsua}" required>
+		    <option value="1">Activo</option>
+		    <option value="0">Inactivo</option>
+		</select><br/>
+        
+        <button type="submit">Registrar</button>
+        
+    </form>
+    <a th:href="@{/menu}">Volver</a>
+    
+    
+    
+</body>
+</html>
