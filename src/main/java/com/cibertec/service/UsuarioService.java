@@ -71,5 +71,4 @@ public class UsuarioService {
 		    return s != null && !s.trim().isEmpty();
 		}
 
-	 
 }
