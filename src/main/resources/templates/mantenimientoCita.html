@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clínica VIDA - Mantenimiento</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+    <div class="card shadow" style="max-width: 600px; margin: auto;">
+        <div class="card-header bg-dark text-white text-center">
+            <h3>Mantenimiento de Cita</h3>
+        </div>
+        <div class="card-body">
+            <form th:action="@{/citas/actualizar}" th:object="${cita}" method="post">
+                
+                <input type="hidden" th:field="*{idCita}">
+
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Fecha de Cita:</label>
+                    <input type="datetime-local" th:field="*{fecha}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+    <label class="form-label">Paciente:</label>
+    <select th:field="*{paciente.idPaciente}" class="form-select" required>
+        <option value="0">Seleccione un paciente</option> 
+        <option th:each="p : ${pacientes}" 
+                th:value="${p.idPaciente}" 
+                th:text="${p.nombres}"></option>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Médico:</label>
+    <select th:field="*{medico.idMedico}" class="form-select" required>
+        <option value="0">Seleccione un médico</option>
+        <option th:each="m : ${medicos}" 
+                th:value="${m.idMedico}" 
+                th:text="${m.nombres}"></option>
+    </select>
+</div>
+
+                <div class="mb-3">
+                    <label class="form-label">Costo del Servicio (S/):</label>
+                    <input type="number" step="0.01" th:field="*{costo}" class="form-control" required>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success">Actualizar Cita</button>
+                    <a th:href="@{/citas/consulta}" class="btn btn-secondary">Regresar al Listado</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

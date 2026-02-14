@@ -1,0 +1,67 @@
+
+CREATE DATABASE IF NOT EXISTS ClinicaVIDA;
+USE ClinicaVIDA;
+
+
+CREATE TABLE paciente (
+    id_paciente INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(100) NOT NULL,
+    dni VARCHAR(12) NOT NULL UNIQUE,
+    telefono VARCHAR(15)
+);
+
+
+CREATE TABLE medico (
+    id_medico INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(100) NOT NULL,
+    especialidad VARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE cita (
+    id_cita INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATETIME NOT NULL,
+    costo DECIMAL(10, 2) NOT NULL,
+    id_paciente INT NOT NULL,
+    id_medico INT NOT NULL,
+    
+   
+    CONSTRAINT fk_cita_paciente 
+        FOREIGN KEY (id_paciente) 
+        REFERENCES paciente(id_paciente)
+        ON DELETE CASCADE,
+        
+    CONSTRAINT fk_cita_medico 
+        FOREIGN KEY (id_medico) 
+        REFERENCES medico(id_medico)
+        ON DELETE CASCADE
+);
+
+
+
+INSERT INTO medico (nombres, especialidad) VALUES 
+('Dr. Gregory House', 'Diagnóstico'),
+('Dra. Meredith Grey', 'Cirugía General'),
+('Dr. Shaun Murphy', 'Cirugía Pediátrica'),
+('Dr. Stephen Strange', 'Neurocirugía'),
+('Dra. Dana Scully', 'Patología');
+
+
+INSERT INTO paciente (nombres, dni, telefono) VALUES 
+('Juan Pérez', '12345678', '987654321'),
+('María García', '87654321', '912345678'),
+('Ricardo Tapia', '45678912', '955667788'),
+('Lucía Méndez', '32165498', '944332211'),
+('Roberto Gómez', '74185296', '900112233');
+
+
+INSERT INTO cita (fecha, costo, id_paciente, id_medico) VALUES 
+('2026-02-15 09:00:00', 150.00, 1, 1),
+('2026-02-15 10:30:00', 200.00, 2, 2),
+('2026-02-16 08:15:00', 120.50, 3, 3),
+('2026-02-16 11:00:00', 300.00, 4, 4),
+('2026-02-17 15:45:00', 180.00, 5, 5);
+
+
+
+

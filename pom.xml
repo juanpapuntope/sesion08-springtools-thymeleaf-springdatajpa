@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cibertec</groupId>
-	<artifactId>sesion08-springtools-thymleaf-springdatajpa</artifactId>
+	<artifactId>T2Chocce</artifactId>
 	<version>1.0</version>
 	<name>sesion08-springtools-thymleaf-springdatajpa</name>
 	<description>Demo project for Spring Boot</description>
