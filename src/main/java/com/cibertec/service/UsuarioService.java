@@ -36,4 +36,10 @@ public class UsuarioService {
 	public List<Usuario> listar() {
         return usuarioRepository.findAll();
     }
+	
+	public Usuario buscarPorId(Integer id) {
+	    return usuarioRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+	}
+
 }

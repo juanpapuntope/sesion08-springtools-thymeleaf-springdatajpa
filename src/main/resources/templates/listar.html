@@ -37,24 +37,24 @@
 
                 <!-- BOTONES -->
                 <td class="text-center">
-                    <!-- Ver -->
-                    <a class="btn btn-info btn-sm"
-                       th:href="@{/usuario/ver/{id}(id=${u.codUsua})}">
-                        Ver
-                    </a>
+					<!-- Ver -->
+					<a class="btn btn-info btn-sm"
+					   th:href="@{/ver/{id}(id=${u.codUsua})}">
+					   Ver
+					</a>
 
-                    <!-- Editar -->
-                    <a class="btn btn-warning btn-sm"
-                       th:href="@{/usuario/editar/{id}(id=${u.codUsua})}">
-                        Editar
-                    </a>
+					<!-- Editar -->
+					<a class="btn btn-warning btn-sm"
+					   th:href="@{/editar/{id}(id=${u.codUsua})}">
+					   Editar
+					</a>
 
-                    <!-- Eliminar -->
-                    <a class="btn btn-danger btn-sm"
-                       th:href="@{/usuario/eliminar/{id}(id=${u.codUsua})}"
-                       onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
-                        Eliminar
-                    </a>
+					<!-- Eliminar -->
+					<a class="btn btn-danger btn-sm"
+					   th:href="@{/eliminar/{id}(id=${u.codUsua})}"
+					   onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
+					   Eliminar
+					</a>
                 </td>
             </tr>
         </tbody>

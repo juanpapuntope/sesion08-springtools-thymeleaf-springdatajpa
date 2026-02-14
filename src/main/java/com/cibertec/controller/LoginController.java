@@ -3,9 +3,11 @@ package com.cibertec.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cibertec.model.Tipo;
 import com.cibertec.model.Usuario;
 import com.cibertec.service.TipoService;
 import com.cibertec.service.UsuarioService;
@@ -54,12 +56,18 @@ public class LoginController {
 	}
 	
 	// Mostrar formulario
-    @GetMapping("/registrar")
-    public String nuevoUsuario(Model model){
-        model.addAttribute("usuario", new Usuario());
-        model.addAttribute("tipos", tipoService.listar());
-        return "registrar";
-    }
+	@GetMapping("/registrar")
+	public String nuevoUsuario(Model model){
+
+	    Usuario usuario = new Usuario();
+	    usuario.setTipo(new Tipo()); // 🔥 IMPORTANTE
+
+	    model.addAttribute("usuario", usuario);
+	    model.addAttribute("tipos", tipoService.listar());
+
+	    return "registrar";
+	}
+
 
     // Guardar
     @PostMapping("/guardar")
@@ -87,5 +95,19 @@ public class LoginController {
         return "listar";
     }
     //ESTO
+    
+    
+    //METODO PARA EDITAR 
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable("id") Integer id, Model model) {
+
+        Usuario usuario = usuarioService.buscarPorId(id);
+
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("tipos", tipoService.listar());
+
+        return "registrar";
+    }
+
     
 }
